@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Registreringsformulär</title>
+    </head>
+    <body>
+        <h1>Registrera dig här!</h1>
+        <form method="POST" action="5.11.svar.php">
+            Ange namn: <input type="text" maxlength="50" size="20" name="namn" required><br>
+            Födelsedag: <input type="date" name="fodelsedag" max="2006-09-01"><br>
+            Användarnamn: <input type="text" name="user"  pattern="[a-z]{5,10}" placeholder="Mellan 5 och 10 bokstäver a-z"><br>
+            Lösenord: <input type="password" name="losen" pattern=".{8,}" required title="Minst 8 tecken"><br>
+            Telefon: <input type="tel" name="telefon" pattern="[0-9]{3}-[0-9]{2,9}" placeholder="xxx-xxxx..."><br>
+            <input type="submit" value="Skicka">
+            <input type="reset" value="Ångra">            
+        </form>
+    </body>
+</html>
