@@ -31,9 +31,28 @@
                     if($varde1==$varde2) {
                         $text= "$varde1==$varde2 är sant";
                     } else {
-                        $text= "$varde1==$varde2 är inte sant"
+                        $text= "$varde1==$varde2 är inte sant";
                     }
                     echo $text;
+                    ?>
+                 </td>
+            </tr>
+            <tr>
+                <td><=></td>
+                <td><?= $varde1; ?><=><?= $varde2; ?></td>
+                <td><?= ($varde1<=>$varde2); ?></td>
+                <td><?php 
+                    switch($varde1<=>$varde2) {
+                            case -1:
+                                echo "$varde1 < $varde2";
+                                break;
+                            case 0:
+                                echo "$varde1 = $varde2";
+                                break;
+                            case 1:
+                                echo "$varde1 > $varde2";
+                                break;
+                    }
                     ?>
                  </td>
             </tr>
