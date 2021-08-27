@@ -11,4 +11,3 @@ var_dump($a, $b, $c, $d);
 
 $a=true and false;
 var_dump($a);
-
