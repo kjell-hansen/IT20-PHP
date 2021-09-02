@@ -5,14 +5,18 @@ $check=str_replace(" ", "", $text);
 $check=str_replace("-", "", $check);
 $check=mb_strtolower($check);
 
-$isPalindrom= ($check==strrev($check))
+$baklanges="";
+for($i=1;$i<=mb_strlen($check);$i++) {
+    $baklanges.=mb_substr($check, -$i, 1);
+}
+$isPalindrom= ($check==$baklanges)
 
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Palindrom (4.1)</title>
+        <title>Palindrom (4.1 överkurs för mb-strängar)</title>
     </head>
     <body>
         <form method="POST">
@@ -23,7 +27,7 @@ $isPalindrom= ($check==strrev($check))
         if($isPalindrom) {
             echo "$text är ett palindrom";
         } else {
-            echo "$text är inget palindrom";
+            echo "$text är inget palindrom ($check != $baklanges)";
         }
     ?>
     </body>
