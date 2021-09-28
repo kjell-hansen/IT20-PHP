@@ -1,0 +1,11 @@
+<p>HAha!<br> Hej <?= $namn; ?></p>
+<p>Här är dina tärningars värde:</p>
+<form method="POST">
+    Markera tärningarna du vill slå om...<br>
+    <?php
+        foreach($tarning as $key=>$value){
+            echo "Tärning $key:$value <input type='checkbox' name='tarning_$i'><br>";
+        }
+    ?>
+    <input type="submit" name="submit" value="Nästa slag">
+</form>
