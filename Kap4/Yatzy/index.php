@@ -13,9 +13,20 @@ if (isset($_POST['submit'])) {
             for ($i = 0; $i < 5; $i++) {
                 $tarning[$i] = rullaTarning();
             }
+            $antalSlag=1;
             $steg = 1;
             break;
-
+        case 'Nästa slag':
+            var_dump($_POST);
+            if($_POST['antalSlag']<2) {
+                $antalSlag=$_POST['antalSlag'];
+                $antalSlag++;
+                $tarning=slaOmTarningar($_POST);
+                $steg=1;
+            } else {
+                $resultat=utvarderaTarningar($_POST);
+                $steg=2;
+            }
         default:
             break;
     }
@@ -30,7 +41,7 @@ if (isset($_POST['submit'])) {
     <body>
         <h1>Yatzy</h1>
         <?php
-        include "html/steg$steg.html";
+        include "include/steg$steg.php";
         ?>
     </body>
 </html>
