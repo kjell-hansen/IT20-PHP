@@ -47,13 +47,8 @@ function slaOmTarningar(array $post): array {
     return $ret;
 }
 
-function utvarderaTarningar(array $post): array {
-    $tarning = [];
-    // Läs in tärningarnas värden från formuläret till en array
-    for ($i = 0; $i < 5; $i++) {
-        $tarning[$i] = (int) $_POST["t_$i"];
-    }
-    var_dump(array_count_values($tarning));
+function utvarderaTarningar(array $tarning): array {
+
     switch (count(array_count_values($tarning))) {
         case 1:
             return ["resultat" => "Yatzy!", "varde" => 50];
@@ -72,7 +67,14 @@ function utvarderaTarningar(array $post): array {
         case 4:
             return ["resultat" => "Par", "varde" => raknaPar(array_count_values($tarning))];
         default:
-            break;
+            $ogon = raknaOgon(array_count_values($tarning));
+            if ($ogon === 15) {
+                return ["resultat" => "Liten stege", "varde" => 15];
+            } elseif ($ogon === 20) {
+                return ["resultat" => "Stor stege", "varde" => 20];
+            } else {
+                return ["resultat" => "Chans", "varde" => $ogon];
+            }
     }
     return ["resultat" => "Par", "varde" => 7];
 }
@@ -121,5 +123,13 @@ function raknaKak(array $values): int {
         $summa += $ogon * $antal;
     }
 
+    return $summa;
+}
+
+function raknaOgon(array $values): int {
+    $summa = 0;
+    foreach ($values as $ogon => $antal) {
+        $summa += $ogon;
+    }
     return $summa;
 }
