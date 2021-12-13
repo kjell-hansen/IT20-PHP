@@ -3,6 +3,7 @@ declare(strict_types=1);
 $resultat["Lotto"] = slumpaLottorad();
 $resultat["ServerTime"]= date("r");
 
+header("Content-type:application/json;charset=UTF-8");
 echo json_encode($resultat);
 
 function slumpaLottorad(): string {
