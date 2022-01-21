@@ -43,7 +43,7 @@ function medlemsDropDown(PDO $db, $medlem):string {
         $select .= "<option>Välj medlem</option>";
     }
     foreach ($result as $row) {
-        if($row['medlemsnr']===$medlem) {
+        if($row['medlemsnr']==$medlem) {
             $select .="<option value='$row[medlemsnr]' selected>$row[fornamn] $row[efternamn]</option>";
         } else {
             $select .="<option value='$row[medlemsnr]'>$row[fornamn] $row[efternamn]</option>";
@@ -54,5 +54,20 @@ function medlemsDropDown(PDO $db, $medlem):string {
     return $select;
 }
 function batLista(PDO $db, $medlem):string {
+    if($medlem===-1) {
+        return "";
+    }
     
+    $sql="SELECT regnr, namn, bryggplats FROM batar "
+            . "WHERE agareid=:medlem";
+    $stmt=$db->prepare($sql);
+    $stmt->execute(['medlem'=>$medlem]);
+    
+    $resultat=$stmt->fetchAll();
+    $tabell="<tr><th>Båtnamn</th><th>Registernr</th><th>Bryggplats</th></tr>";
+    foreach ($resultat as $row) {
+        $tabell .="<tr><td>$row[namn]</td><td>$row[regnr]</td><td>$row[bryggplats]</td></tr>";
+    }
+    
+    return $tabell;
 }
