@@ -17,7 +17,7 @@ function kopplaDatabas(): PDO {
 
 function skickaSvar(stdClass $info, int $svarsKod): void {
     header(hamtaHeader($svarsKod));
-    echo json_encode($info, JSON_UNESCAPED_UNICODE);
+    echo json_encode($info, JSON_UNESCAPED_UNICODE + JSON_PRETTY_PRINT );
     exit;
 }
 
