@@ -33,6 +33,9 @@ function hamtaHeader(int $svarsKod): string {
         case 401:
             $retur = "401 Unauthorized" . $retur;
             break;
+        case 405:
+            $retur = "405 Method not allowed" . $retur;
+            break;
         default:
             $retur = "500 Invalid Header" . $retur;
             break;
