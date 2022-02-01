@@ -13,7 +13,7 @@ if (isset($_GET['page'])) {
 
     $records = filter_input(INPUT_GET, 'records', FILTER_VALIDATE_INT);
     if ($records < 1) {
-        $records = 2; // 20;
+        $records = 20;
     }
 
 // Räkna ut första posten att returnera
