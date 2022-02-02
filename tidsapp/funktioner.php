@@ -17,7 +17,7 @@ function kopplaDatabas(): PDO {
 
 function skickaSvar(stdClass $info, int $svarsKod): void {
     header(hamtaHeader($svarsKod));
-    echo json_encode($info, JSON_UNESCAPED_UNICODE + JSON_PRETTY_PRINT );
+    echo json_encode($info, JSON_UNESCAPED_UNICODE + JSON_PRETTY_PRINT);
     exit;
 }
 
@@ -42,6 +42,53 @@ function hamtaHeader(int $svarsKod): string {
     }
 
     $retur = "HTTP/1.1 " . $retur;
+
+    return $retur;
+}
+
+function kontrolleraUppgift(): array {
+    $retur = [];
+    if (isset($_POST['activityId'])) {
+        $activityId = filter_input(INPUT_POST, 'activityId', FILTER_VALIDATE_INT);
+        if ($activityId < 1) {
+            $retur[] = "Felaktigt angiven 'activityId'";
+        }
+    } else {
+        $retur[] = "'activityId' saknas";
+    }
+
+    if (isset($_POST['date'])) {
+        $date = filter_input(INPUT_POST, 'date', FILTER_SANITIZE_STRING);
+        if ($realDate = DateTimeImmutable::createFromFormat('Y-m-d', $date)) {
+            if ($realDate->format('Y-m-d') !== $date) {
+                $retur[] = "Felaktigt angivet 'date' ange som " . date('Y-m-d');
+            }
+        } else {
+            $retur[] = "Felaktigt angivet 'date' ange som " . date('Y-m-d');
+        }
+    } else {
+        $retur[] = "'date' saknas";
+    }
+
+    if (isset($_POST['time'])) {
+        $time = filter_input(INPUT_POST, 'time', FILTER_SANITIZE_STRING);
+        if ($realTime = DateTimeImmutable::createFromFormat("H:i", $time)) {
+            if ($realTime->format('H:i') !== $time) {
+                $retur[] = "Felaktigt angiven 'time' ange som " . date('H:i');
+            }
+            if ($realTime->format('H:i') > "08:00") {
+                $retur[] = "Du får redovisa högst 8:00 timmar på en uppgift";
+            }
+        } else {
+            $retur[] = "Felaktigt angiven 'time' ange som " . date('H:i');
+        }
+    } else {
+        $retur[] = "'time' saknas";
+    }
+
+    if (count($retur) > 0) {
+        array_unshift($retur, "Fel på indata");
+    }
 
     return $retur;
 }
