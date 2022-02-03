@@ -17,7 +17,7 @@ function kopplaDatabas(): PDO {
 
 function skickaSvar(stdClass $info, int $svarsKod): void {
     header(hamtaHeader($svarsKod));
-    echo json_encode($info, JSON_UNESCAPED_UNICODE + JSON_PRETTY_PRINT);
+    echo json_encode($info, JSON_UNESCAPED_UNICODE + JSON_PRETTY_PRINT); //+ JSON_PARTIAL_OUTPUT_ON_ERROR);
     exit;
 }
 
@@ -53,6 +53,14 @@ function kontrolleraUppgift(): array {
         if ($activityId < 1) {
             $retur[] = "Felaktigt angiven 'activityId'";
         }
+        // Finns aktiviteten i databasen
+        $sql="SELECT * FROM activities WHERE id=:id";
+        $db= kopplaDatabas();
+        $stmt=$db->prepare($sql);
+        $stmt->execute(['id'=>$activityId]);
+        if (!$stmt->fetch()) {
+            $retur[]="aktivitetsid saknas i databasen ($activityId)";
+        } 
     } else {
         $retur[] = "'activityId' saknas";
     }
