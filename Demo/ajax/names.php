@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] != "POST") {
     exit;
 }
 
-$test = mb_strtolower(filter_input(INPUT_POST, "namn", FILTER_SANITIZE_STRING));
+$test = mb_strtolower(filter_input(INPUT_POST, "namn", FILTER_UNSAFE_RAW));
 foreach ($namn as $value) {
     if (mb_substr(mb_strtolower($value), 0, mb_strlen($test)) === $test) {
         $resultat[] = $value;
